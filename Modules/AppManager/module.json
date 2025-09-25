@@ -1,0 +1,11 @@
+{
+    "name": "AppManager",
+    "alias": "appmanager",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AppManager\\Providers\\AppManagerServiceProvider"
+    ],
+    "files": []
+}

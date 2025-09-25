@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Sanctum\PersonalAccessToken;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class AuthService
@@ -224,6 +225,7 @@ class AuthService
     {
         // Generate TOTP secret, store encrypted
         $secret = encrypt(Str::random(32));
+        Cache::put("mfa_secret:{$user->id}", $secret, now()->addDays(30)); // TTL configurable
         $user->update(['mfa_secret' => $secret]);
         $this->logEvent($user, 'user.mfa_enabled');
         // Return QR code / secret for client setup

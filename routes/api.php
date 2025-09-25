@@ -32,7 +32,7 @@ Route::prefix('api/v1')->group(function () {
 
         // Login (returns Sanctum token)
         Route::post('/login', [AuthController::class, 'login'])
-            ->name('auth.login');
+            ->name('auth.login')->middleware('throttle:login');
 
         // Forgot Password (send reset link)
         Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])
@@ -40,7 +40,7 @@ Route::prefix('api/v1')->group(function () {
 
         // Reset Password (via token)
         Route::post('/reset-password', [AuthController::class, 'resetPassword'])
-            ->name('auth.password.reset');
+            ->name('auth.password.reset')->middleware('throttle:password-reset');
 
         // Social Login (Google, Facebook, GitHub, etc.)
         Route::post('/social/{provider}', [AuthController::class, 'socialLogin'])
