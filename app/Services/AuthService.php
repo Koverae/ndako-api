@@ -46,6 +46,7 @@ class AuthService
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
 
@@ -166,7 +167,7 @@ class AuthService
     /**
      * Social login / registration (supports multiple providers)
      */
-    public function socialLogin(string $provider, ?string $token = null, string $deviceName = null): array
+    public function socialLogin(string $provider, ?string $token = null, ?string $deviceName = null): array
     {
         $socialUser = $token
             ? Socialite::driver($provider)->stateless()->userFromToken($token)

@@ -11,7 +11,7 @@ class SendInvitationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user() !== null; // must be authenticated
     }
 
     /**
@@ -22,7 +22,9 @@ class SendInvitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => ['required', 'email', 'max:255'],
+            'role' => ['required', 'string', 'in:owner,manager,front-office,reservations,housekeeping,maintenance,accounting,cashier'],
+            'company_id' => ['required', 'integer', 'exists:companies,id'],
         ];
     }
 }
